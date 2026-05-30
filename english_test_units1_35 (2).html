@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Test · Units 1–35</title>
+  <style>
+  :root {
+    --bg: #f5f2eb;
+    --card: #ffffff;
+    --teal: #1a7a6e;
+    --teal-light: #e8f4f2;
+    --orange: #e8622a;
+    --orange-light: #fdf0ea;
+    --gold: #c9952a;
+    --gold-light: #fdf6e7;
+    --purple: #6b4fa0;
+    --purple-light: #f0edf8;
+    --text: #1c1c1c;
+    --muted: #666;
+    --border: #e0dbd0;
+    --correct: #1a7a6e;
+    --wrong: #d63c2b;
+    --radius: 12px;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-display: Georgia, 'Times New Roman', serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none !important; }
+  .screen.active { display: block !important; }
+  #welcome.active { display: flex !important; }
+
+  /* ── WELCOME ── */
+  #welcome {
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1a7a6e 0%, #2d9d8f 50%, #1a6e5a 100%);
+  }
+
+  .welcome-badge {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+
+  .welcome-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 6vw, 64px);
+    color: #fff;
+    text-align: center;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .welcome-sub {
+    color: rgba(255,255,255,0.8);
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 48px;
+    max-width: 400px;
+  }
+
+  .welcome-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 36px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+
+  .welcome-card h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  .field-group { margin-bottom: 18px; }
+  .field-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .field-group input, .field-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--text);
+    background: #fafaf8;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .field-group input:focus, .field-group select:focus {
+    border-color: var(--teal);
+    background: #fff;
+  }
+
+  .btn-start {
+    width: 100%;
+    padding: 14px;
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 8px;
+  }
+  .btn-start:hover { background: #15685d; transform: translateY(-1px); }
+  .btn-start:active { transform: translateY(0); }
+
+  /* ── TEST ── */
+  #test {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+
+  .test-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding: 16px 20px;
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .test-student {
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .test-student span { color: var(--teal); }
+
+  .progress-wrap { flex: 1; margin: 0 20px; }
+  .progress-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 5px;
+    text-align: right;
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--teal);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .score-badge {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--teal);
+    background: var(--teal-light);
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* Section label */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+
+  .q-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s;
+  }
+  .q-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .q-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .q-unit-tag {
+    font-size: 11px;
+    background: #f0ede8;
+    color: #888;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .q-text {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.55;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  .q-text strong { color: var(--teal); }
+
+  /* MCQ */
+  .mcq-options { display: flex; flex-direction: column; gap: 10px; }
+  .mcq-opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 15px;
+    background: #fafaf8;
+    user-select: none;
+  }
+  .mcq-opt:hover:not(.locked) { border-color: var(--teal); background: var(--teal-light); }
+  .mcq-opt.selected { border-color: var(--teal); background: var(--teal-light); }
+  .mcq-opt.correct { border-color: var(--correct); background: #eef8f6; color: var(--correct); font-weight: 500; }
+  .mcq-opt.wrong { border-color: var(--wrong); background: #fdf0ee; color: var(--wrong); }
+  .mcq-opt.locked { cursor: default; }
+  .opt-letter {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+    color: var(--muted);
+  }
+  .mcq-opt.selected .opt-letter { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .mcq-opt.correct .opt-letter { background: var(--correct); border-color: var(--correct); color: #fff; }
+  .mcq-opt.wrong .opt-letter { background: var(--wrong); border-color: var(--wrong); color: #fff; }
+
+  /* Fill in blank */
+  .fill-blank {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .fill-blank input {
+    padding: 8px 14px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    min-width: 160px;
+    max-width: 220px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #fafaf8;
+  }
+  .fill-blank input:focus { border-color: var(--teal); background: #fff; }
+  .fill-blank input.correct { border-color: var(--correct); background: #eef8f6; color: var(--correct); }
+  .fill-blank input.wrong { border-color: var(--wrong); background: #fdf0ee; color: var(--wrong); }
+
+  /* True/False */
+  .tf-options { display: flex; gap: 12px; }
+  .tf-btn {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    background: #fafaf8;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .tf-btn:hover:not(.locked) { border-color: var(--teal); background: var(--teal-light); }
+  .tf-btn.selected { border-color: var(--teal); background: var(--teal-light); color: var(--teal); }
+  .tf-btn.correct { border-color: var(--correct); background: #eef8f6; color: var(--correct); }
+  .tf-btn.wrong { border-color: var(--wrong); background: #fdf0ee; color: var(--wrong); }
+  .tf-btn.locked { cursor: default; }
+
+  /* Matching */
+  .match-wrap { display: flex; flex-direction: column; gap: 8px; }
+  .match-row { display: flex; align-items: center; gap: 10px; }
+  .match-left {
+    flex: 1;
+    padding: 10px 14px;
+    background: var(--teal-light);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--teal);
+    text-align: right;
+  }
+  .match-arrow { color: var(--muted); font-size: 18px; flex-shrink: 0; }
+  .match-row select {
+    flex: 1;
+    padding: 10px 12px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    background: #fafaf8;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .match-row select:focus { border-color: var(--teal); }
+  .match-row select.correct { border-color: var(--correct); background: #eef8f6; }
+  .match-row select.wrong { border-color: var(--wrong); background: #fdf0ee; }
+
+  /* Error correction */
+  .error-sent {
+    font-size: 16px;
+    background: #fdf6e7;
+    border-left: 4px solid var(--gold);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  /* Reorder */
+  .reorder-wrap { display: flex; flex-direction: column; gap: 8px; }
+  .reorder-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    background: #fafaf8;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .reorder-input:focus { border-color: var(--teal); }
+  .reorder-input.correct { border-color: var(--correct); background: #eef8f6; color: var(--correct); }
+  .reorder-input.wrong { border-color: var(--wrong); background: #fdf0ee; color: var(--wrong); }
+  .word-chips {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;
+  }
+  .chip {
+    padding: 6px 14px;
+    background: var(--purple-light);
+    color: var(--purple);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1.5px solid #c9b8e8;
+    cursor: default;
+    user-select: none;
+  }
+
+  /* Check button */
+  .btn-check {
+    margin-top: 16px;
+    padding: 10px 24px;
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-check:hover { background: #15685d; }
+  .btn-check:disabled { background: #aaa; cursor: not-allowed; }
+
+  .feedback {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+    align-items: center;
+    gap: 8px;
+  }
+  .feedback.show { display: flex; }
+  .feedback.ok { background: #eef8f6; color: var(--correct); }
+  .feedback.bad { background: #fdf0ee; color: var(--wrong); }
+
+  /* Submit section */
+  .submit-wrap {
+    text-align: center;
+    padding: 32px 0;
+  }
+  .btn-submit {
+    padding: 16px 48px;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 4px 16px rgba(232,98,42,0.35);
+  }
+  .btn-submit:hover { background: #cc4e1e; transform: translateY(-2px); }
+
+  /* ── RESULTS ── */
+  #results {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 16px;
+  }
+
+  .results-hero {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .results-circle {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    border: 6px solid var(--teal);
+    background: var(--teal-light);
+  }
+  .results-circle .big-num {
+    font-family: var(--font-display);
+    font-size: 42px;
+    color: var(--teal);
+    line-height: 1;
+  }
+  .results-circle .big-denom {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .results-hero h1 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .results-hero p { color: var(--muted); font-size: 15px; }
+
+  /* Teacher dashboard */
+  #dashboard {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 16px;
+  }
+
+  .dash-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+  .dash-sub { color: var(--muted); margin-bottom: 32px; }
+
+  .dash-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .student-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+
+  .student-card-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  .student-card-time { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+
+  .score-ring-wrap { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .score-ring {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    border: 5px solid var(--teal);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: var(--teal-light);
+    flex-shrink: 0;
+  }
+  .score-ring .snum { font-size: 22px; font-weight: 700; color: var(--teal); line-height: 1; }
+  .score-ring .sdenom { font-size: 11px; color: var(--muted); }
+
+  .score-breakdown { flex: 1; }
+  .score-breakdown .sb-row {
+    display: flex; justify-content: space-between;
+    font-size: 13px; margin-bottom: 5px;
+  }
+  .sb-label { color: var(--muted); }
+  .sb-val { font-weight: 600; }
+
+  .correct-color { color: var(--correct); }
+  .wrong-color { color: var(--wrong); }
+
+  .answer-details { margin-top: 16px; }
+  .answer-details summary {
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--teal);
+    margin-bottom: 8px;
+    list-style: none;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .answer-details summary::before { content: '▶'; font-size: 10px; transition: transform 0.2s; }
+  .answer-details[open] summary::before { transform: rotate(90deg); }
+
+  .ans-row {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0ede8;
+    align-items: flex-start;
+  }
+  .ans-row:last-child { border-bottom: none; }
+  .ans-icon { flex-shrink: 0; font-size: 14px; }
+  .ans-q { flex: 1; color: var(--muted); }
+  .ans-given { font-weight: 500; }
+  .ans-expected { font-size: 12px; color: var(--correct); }
+
+  .btn-new {
+    padding: 12px 28px;
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: block;
+    margin: 0 auto;
+  }
+  .btn-new:hover { background: #15685d; }
+
+  /* nav for teacher */
+  .dash-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .nav-pill {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--card);
+  }
+  .nav-pill.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .nav-pill:hover:not(.active) { border-color: var(--teal); color: var(--teal); }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty-state .em-icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state p { font-size: 15px; }
+
+  /* section headers in test */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 32px 0 16px;
+  }
+  .section-divider-line { flex: 1; height: 1px; background: var(--border); }
+  .section-divider-text {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 520px) {
+    .test-header { flex-wrap: wrap; gap: 12px; }
+    .progress-wrap { order: 3; flex: 0 0 100%; margin: 0; }
+    .q-text { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ WELCOME ══════════ -->
+<div id="welcome" class="screen active">
+  <div class="welcome-badge">English for Everyone · Level 3</div>
+  <h1 class="welcome-title">Units 1–35<br>Progress Test</h1>
+  <p class="welcome-sub">Grammar, vocabulary, reading & writing in one place</p>
+
+  <div class="welcome-card">
+    <h2>Enter your details</h2>
+    <div class="field-group">
+      <label>Your name</label>
+      <input type="text" id="student-name" placeholder="e.g. Aziz Karimov" autocomplete="off">
+    </div>
+    <div class="field-group">
+      <label>I am a…</label>
+      <select id="user-role">
+        <option value="student">Student – take the test</option>
+        <option value="teacher">Teacher – view results</option>
+      </select>
+    </div>
+    <button class="btn-start" onclick="startSession()">Begin →</button>
+  </div>
+</div>
+
+<!-- ══════════ TEST ══════════ -->
+<div id="test" class="screen">
+  <div class="test-header">
+    <div class="test-student">Hello, <span id="header-name">—</span></div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="prog-label">0 / 0</div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+    </div>
+    <div class="score-badge" id="live-score">Score: 0</div>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <div class="submit-wrap">
+    <button class="btn-submit" onclick="submitTest()">Submit Test</button>
+  </div>
+</div>
+
+<!-- ══════════ RESULTS ══════════ -->
+<div id="results" class="screen">
+  <div class="results-hero">
+    <div class="results-circle">
+      <div class="big-num" id="res-score">0</div>
+      <div class="big-denom" id="res-denom">/ 0</div>
+    </div>
+    <h1 id="res-title">Well done!</h1>
+    <p id="res-sub">—</p>
+  </div>
+  <div style="text-align:center">
+    <button class="btn-new" onclick="goHome()">← Back to Start</button>
+  </div>
+</div>
+
+<!-- ══════════ DASHBOARD ══════════ -->
+<div id="dashboard" class="screen">
+  <div class="dash-title">📊 Results Dashboard</div>
+  <div class="dash-sub">Student submissions for Units 1–35 test</div>
+  <div class="dash-nav">
+    <div class="nav-pill active" onclick="goHome()">← New Test</div>
+    <div class="nav-pill active" id="refresh-btn" onclick="loadDashboard()">↻ Refresh</div>
+  </div>
+  <div class="dash-cards" id="dash-cards"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+//  QUESTION BANK  – Units 1–35
+// ══════════════════════════════════════════════════
+const QUESTIONS = [
+
+  // ── UNIT 1  Making conversation / Question tags
+  { id:1, unit:1, topic:"Question tags", type:"mcq",
+    question:"You're from Tashkent, ___?",
+    options:["aren't you","isn't you","don't you","weren't you"], answer:0 },
+
+  { id:2, unit:1, topic:"Question tags", type:"mcq",
+    question:"She doesn't like coffee, ___?",
+    options:["does she","doesn't she","is she","isn't she"], answer:0 },
+
+  // ── UNIT 3  Prepositions of place
+  { id:3, unit:3, topic:"Prepositions of place", type:"mcq",
+    question:"The bank is ___ the post office and the pharmacy.",
+    options:["between","among","beside","near"], answer:0 },
+
+  { id:4, unit:3, topic:"Prepositions of place", type:"fill",
+    question:"The cat is sitting ___ the table. (= directly below)",
+    blank:"under", hint:"under / on / in / behind" },
+
+  // ── UNIT 5  Times and dates
+  { id:5, unit:5, topic:"Times & dates", type:"mcq",
+    question:"How do you say 14:45 in British English?",
+    options:["Quarter to three","Quarter past two","Two forty-five","Half past two"], answer:0 },
+
+  { id:6, unit:5, topic:"Times & dates", type:"tf",
+    statement:"In American English, the date 07/04 means the 7th of April.",
+    answer: false, explanation:"In American English, 07/04 means July 4th (month first)." },
+
+  // ── UNIT 7  Talking about jobs
+  { id:7, unit:7, topic:"Job / Work", type:"mcq",
+    question:"I love ___ with computers.",
+    options:["working","work","to working","works"], answer:0 },
+
+  { id:8, unit:7, topic:"Job / Work", type:"mcq",
+    question:"She does ___ job in a hospital. She's a nurse.",
+    options:["a","an","the","—"], answer:0 },
+
+  // ── UNIT 8  Adverbs of frequency
+  { id:9, unit:8, topic:"Adverbs of frequency", type:"mcq",
+    question:"Which sentence uses the adverb of frequency in the CORRECT position?",
+    options:["She always is late for class.","She is always late for class.","Always she is late for class.","She is late always for class."], answer:1 },
+
+  { id:10, unit:8, topic:"Adverbs of frequency", type:"reorder",
+    prompt:"Reorder these words to make one correct sentence:",
+    words:["often","I","in","read","evenings","the"], answer:"I often read in the evenings" },
+
+  // ── UNIT 9  Phrasal verbs
+  { id:11, unit:9, topic:"Phrasal verbs", type:"mcq",
+    question:"'Wake ___' means to stop sleeping. Which particle completes it?",
+    options:["up","out","in","off"], answer:0 },
+
+  { id:12, unit:9, topic:"Phrasal verbs", type:"mcq",
+    question:"I need to ___ up early tomorrow. My flight is at 5am.",
+    options:["wake","do","put","go"], answer:0 },
+
+  // ── UNIT 11  Adjective order
+  { id:13, unit:11, topic:"Adjective order", type:"mcq",
+    question:"Which phrase has the CORRECT adjective order?",
+    options:["a beautiful small old Italian car","a small old beautiful Italian car","an Italian old small beautiful car","an old Italian beautiful small car"], answer:0 },
+
+  // ── UNIT 13  Present continuous
+  { id:14, unit:13, topic:"Present continuous", type:"mcq",
+    question:"Which sentence uses the present continuous CORRECTLY?",
+    options:["She is wearing a red dress right now.","She wearing a red dress.","She is wear a red dress.","She are wearing a red dress."], answer:0 },
+
+  { id:15, unit:13, topic:"Present continuous", type:"tf",
+    statement:"'I am wearing jeans' describes a permanent habit.",
+    answer: false, explanation:"Present continuous describes what is happening now or around now, not a permanent habit." },
+
+  // ── UNIT 15  Collocations – daily routines
+  { id:16, unit:15, topic:"Collocations", type:"mcq",
+    question:"Which collocation is NOT correct?",
+    options:["make homework","make the bed","make a decision","make a mistake"], answer:0 },
+
+  { id:17, unit:15, topic:"Collocations", type:"match",
+    instruction:"Match each verb with the correct noun:",
+    pairs:[
+      { left:"make", right:"the bed" },
+      { left:"do", right:"the dishes" },
+      { left:"take", right:"out the trash" },
+    ],
+    allRights:["the bed","the dishes","out the trash"] },
+
+  // ── UNIT 16  Separable phrasal verbs
+  { id:18, unit:16, topic:"Separable phrasal verbs", type:"mcq",
+    question:"The music is too loud. Can you ___ it ___?",
+    options:["turn / down","turn / up","put / off","switch / on"], answer:0 },
+
+  // ── UNIT 17  Modifiers / Comparatives
+  { id:19, unit:17, topic:"Modifiers / comparatives", type:"mcq",
+    question:"The Sahara is ___ bigger than the Arabian Desert.",
+    options:["much","very","so","too"], answer:0 },
+
+  { id:20, unit:17, topic:"Comparatives", type:"error",
+    sentence:"Paris is more bigger than Lyon.",
+    question:"Find and correct the grammar error in this sentence.",
+    answer:"Paris is bigger than Lyon.", acceptAlso:["bigger","Paris is much bigger than Lyon"] },
+
+  // ── UNIT 18  Adjectives -ing / -ed
+  { id:21, unit:18, topic:"-ing / -ed adjectives", type:"mcq",
+    question:"The film was really ___. I fell asleep!",
+    options:["boring","bored","bore","boringly"], answer:0 },
+
+  { id:22, unit:18, topic:"-ing / -ed adjectives", type:"mcq",
+    question:"She was ___ by the loud noise.",
+    options:["frightened","frightening","frighten","frighteningly"], answer:0 },
+
+  // ── UNIT 20  "Did" for emphasis / past simple
+  { id:23, unit:20, topic:"Past simple / 'did' emphasis", type:"mcq",
+    question:"I ___ study last night — I promise!",
+    options:["did","do","was","have"], answer:0 },
+
+  { id:24, unit:20, topic:"Past simple", type:"fill",
+    question:"She ___ (go) to school by bike when she was young.",
+    blank:"went", hint:"went / go / goes / gone" },
+
+  // ── UNIT 22  Prefixes and suffixes
+  { id:25, unit:22, topic:"Prefixes & suffixes", type:"mcq",
+    question:"What is the opposite of 'organised' using a prefix?",
+    options:["disorganised","unorganised","inorganised","misorganised"], answer:0 },
+
+  { id:26, unit:22, topic:"Prefixes", type:"match",
+    instruction:"Match the prefix to its meaning:",
+    pairs:[
+      { left:"un-", right:"not / opposite" },
+      { left:"re-", right:"again" },
+      { left:"mis-", right:"wrongly" },
+    ],
+    allRights:["not / opposite","again","wrongly"] },
+
+  // ── UNIT 24  Present perfect
+  { id:27, unit:24, topic:"Present perfect", type:"mcq",
+    question:"___ you ever ___ to Japan?",
+    options:["Have / been","Did / go","Have / went","Do / been"], answer:0 },
+
+  { id:28, unit:24, topic:"Present perfect", type:"tf",
+    statement:"'I have visited Paris last year' is grammatically correct.",
+    answer: false, explanation:"With a specific past time reference ('last year'), use the past simple: 'I visited Paris last year.'" },
+
+  // ── UNIT 25  Modifying adverbs
+  { id:29, unit:25, topic:"Modifying adverbs", type:"mcq",
+    question:"Which word CANNOT be used before an adjective as a modifying adverb?",
+    options:["absolute","incredibly","extremely","remarkably"], answer:0 },
+
+  // ── UNIT 26  Present perfect continuous
+  { id:30, unit:26, topic:"Present perfect continuous", type:"mcq",
+    question:"My hands are covered in paint. I ___ the living room.",
+    options:["have been painting","painted","was painting","had painted"], answer:0 },
+
+  { id:31, unit:26, topic:"Present perfect continuous", type:"fill",
+    question:"She ___ (paint) the house for three days.",
+    blank:"has been painting", hint:"has been painting / has painted / painted" },
+
+  // ── UNIT 27  PP continuous questions
+  { id:32, unit:27, topic:"PP continuous questions", type:"mcq",
+    question:"How long ___ you been learning English?",
+    options:["have","did","do","are"], answer:0 },
+
+  // ── UNIT 28  State vs action verbs
+  { id:33, unit:28, topic:"State vs action verbs", type:"mcq",
+    question:"Which sentence is CORRECT?",
+    options:["I am knowing the answer.","I know the answer.","I am knowing answer.","I do know the answer now."], answer:1 },
+
+  { id:34, unit:28, topic:"Present perfect simple", type:"tf",
+    statement:"'She has fixed the car. It works now.' — This describes a result in the present.",
+    answer: true, explanation:"The present perfect simple links a past action to a present result." },
+
+  // ── UNIT 29  Negative prefixes
+  { id:35, unit:29, topic:"Negative prefixes", type:"mcq",
+    question:"The opposite of 'patient' is ___.",
+    options:["impatient","unpatient","inpatient","dispatient"], answer:0 },
+
+  { id:36, unit:29, topic:"Negative prefixes", type:"fill",
+    question:"It's ___ (not possible) to finish this in one day.",
+    blank:"impossible", hint:"impossible / unpossible / not possible" },
+
+  // ── UNIT 30  Articles
+  { id:37, unit:30, topic:"Definite & zero articles", type:"mcq",
+    question:"Sam always buys ___ clothes from ___ market on Sundays.",
+    options:["— / the","the / a","— / —","the / —"], answer:0 },
+
+  { id:38, unit:30, topic:"Have / Have got", type:"mcq",
+    question:"___ you got a pen I can borrow?",
+    options:["Have","Do","Has","Are"], answer:0 },
+
+  // ── UNIT 32  Reflexive pronouns
+  { id:39, unit:32, topic:"Reflexive pronouns", type:"mcq",
+    question:"He cut ___ while chopping vegetables.",
+    options:["himself","hisself","him","itself"], answer:0 },
+
+  { id:40, unit:32, topic:"Reflexive pronouns", type:"fill",
+    question:"We cooked dinner ___. Nobody helped us.",
+    blank:"ourselves", hint:"ourselves / itself / themselves / yourself" },
+
+  // ── UNIT 33  Gerunds & infinitives for purpose
+  { id:41, unit:33, topic:"Gerund / Infinitive – purpose", type:"mcq",
+    question:"I use this app ___ (in order to) learn vocabulary.",
+    options:["to learn","for learn","for learning","learning"], answer:0 },
+
+  { id:42, unit:33, topic:"Gerund – purpose", type:"mcq",
+    question:"This knife is good ___ bread.",
+    options:["for cutting","to cut","cutting","for to cut"], answer:0 },
+
+  // ── UNIT 35  Simple verb patterns (gerund vs infinitive)
+  { id:43, unit:35, topic:"Verbs + gerund", type:"mcq",
+    question:"After 'can't stand', which form is grammatically correct?",
+    options:["sitting","to sit","sit","to sitting"], answer:0 },
+
+  { id:44, unit:35, topic:"Verbs + gerund", type:"mcq",
+    question:"Which verb is followed by a GERUND (not an infinitive)?",
+    options:["enjoy","want","decide","plan"], answer:0 },
+
+  { id:45, unit:35, topic:"Verbs + infinitive", type:"mcq",
+    question:"Which verb is followed by an INFINITIVE (to + verb)?",
+    options:["arrange","enjoy","miss","can't stand"], answer:0 },
+
+  { id:46, unit:35, topic:"Gerund vs infinitive", type:"mcq",
+    question:"'Look forward to' is always followed by ___.",
+    options:["a gerund (-ing)","an infinitive (to + verb)","a bare infinitive","a past participle"], answer:0 },
+
+  { id:47, unit:35, topic:"Gerund vs infinitive", type:"fill",
+    question:"He decided ___ (take) a gap year before university.",
+    blank:"to take", hint:"to take / taking / take" },
+
+  { id:48, unit:35, topic:"Gerund vs infinitive", type:"error",
+    sentence:"I enjoy to swim in the sea every summer.",
+    question:"Find and correct the grammar error.",
+    answer:"I enjoy swimming in the sea every summer.", acceptAlso:["swimming"] },
+
+];
+
+// ══════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════
+let studentName = "";
+let userRole = "student";
+let answers = {};      // qId -> { given, correct }
+let checked = {};      // qId -> bool (has been checked)
+let shuffledOpts = {}; // qId -> { options: [], correctIdx: int }
+let score = 0;
+const STORAGE_KEY = "eng_test_results_v1";
+
+// Shuffle MCQ options once per session and store correct index
+function prepareShuffles() {
+  QUESTIONS.forEach(q => {
+    if (q.type !== "mcq") return;
+    const correctText = q.options[q.answer];
+    const shuffled = q.options.slice().sort(() => Math.random() - 0.5);
+    shuffledOpts[q.id] = {
+      options: shuffled,
+      correctIdx: shuffled.indexOf(correctText)
+    };
+  });
+}
+
+// ══════════════════════════════════════════════════
+//  SESSION START
+// ══════════════════════════════════════════════════
+function startSession() {
+  studentName = document.getElementById("student-name").value.trim();
+  userRole = document.getElementById("user-role").value;
+  if (!studentName) { alert("Please enter your name first."); return; }
+
+  if (userRole === "teacher") {
+    showScreen("dashboard");
+    loadDashboard();
+  } else {
+    showScreen("test");
+    document.getElementById("header-name").textContent = studentName;
+    shuffledOpts = {};
+    prepareShuffles();
+    renderQuestions();
+  }
+}
+
+// ══════════════════════════════════════════════════
+//  RENDER QUESTIONS
+// ══════════════════════════════════════════════════
+function renderQuestions() {
+  const container = document.getElementById("questions-container");
+  container.innerHTML = "";
+  answers = {}; checked = {}; score = 0;
+
+  const sections = [
+    { label: "Grammar", color: "var(--teal)", bg: "var(--teal-light)", ids: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,19,20] },
+    { label: "Vocabulary", color: "var(--gold)", bg: "var(--gold-light)", ids: [16,17,25,26,35,36] },
+    { label: "Verb Forms & Tenses", color: "var(--orange)", bg: "var(--orange-light)", ids: [23,24,27,28,29,30,31,32,33,34] },
+    { label: "Articles, Pronouns & Patterns", color: "var(--purple)", bg: "var(--purple-light)", ids: [37,38,39,40,41,42,43,44,45,46,47,48] },
+    { label: "Error Correction", color: "#c0392b", bg: "#fdecea", ids: [18,21,22] },
+  ];
+
+  let qNum = 0;
+  sections.forEach(sec => {
+    const qs = QUESTIONS.filter(q => sec.ids.includes(q.id));
+    if (!qs.length) return;
+
+    const div = document.createElement("div");
+    div.className = "section-divider";
+    div.innerHTML = `<div class="section-divider-line"></div>
+      <div class="section-divider-text" style="color:${sec.color}">${sec.label}</div>
+      <div class="section-divider-line"></div>`;
+    container.appendChild(div);
+
+    qs.forEach(q => {
+      qNum++;
+      container.appendChild(buildCard(q, qNum));
+    });
+  });
+
+  updateProgress();
+}
+
+function buildCard(q, num) {
+  const card = document.createElement("div");
+  card.className = "q-card";
+  card.id = `card-${q.id}`;
+
+  let inner = `
+    <div class="q-meta">
+      <div class="q-num">Question ${num}</div>
+      <div class="q-unit-tag">Unit ${q.unit} · ${q.topic}</div>
+    </div>`;
+
+  if (q.type === "mcq") {
+    const sh = shuffledOpts[q.id];
+    inner += `<div class="q-text">${q.question}</div>
+      <div class="mcq-options" id="opts-${q.id}">
+        ${sh.options.map((o,i)=>`
+          <div class="mcq-opt" data-qid="${q.id}" data-idx="${i}" onclick="selectMCQ(${q.id},${i})">
+            <div class="opt-letter">${String.fromCharCode(65+i)}</div>
+            <span>${o}</span>
+          </div>`).join("")}
+      </div>
+      <div class="feedback" id="fb-${q.id}"></div>`;
+
+  } else if (q.type === "fill") {
+    inner += `<div class="q-text">${q.question.replace("___","<strong>___</strong>")}</div>
+      <div class="fill-blank">
+        <input type="text" id="fill-${q.id}" placeholder="${q.hint||'your answer'}" autocomplete="off">
+      </div>
+      <button class="btn-check" onclick="checkFill(${q.id})">Check</button>
+      <div class="feedback" id="fb-${q.id}"></div>`;
+
+  } else if (q.type === "tf") {
+    inner += `<div class="q-text">"${q.statement}"</div>
+      <div class="tf-options">
+        <div class="tf-btn" id="tf-${q.id}-true" onclick="selectTF(${q.id},true)">✓ True</div>
+        <div class="tf-btn" id="tf-${q.id}-false" onclick="selectTF(${q.id},false)">✗ False</div>
+      </div>
+      <div class="feedback" id="fb-${q.id}"></div>`;
+
+  } else if (q.type === "reorder") {
+    const shuffledWords = q.words.slice().sort(() => Math.random() - 0.5);
+    inner += `<div class="q-text">${q.prompt}</div>
+      <div class="word-chips">${shuffledWords.map(w=>`<span class="chip">${w}</span>`).join("")}</div>
+      <div class="reorder-wrap">
+        <input type="text" class="reorder-input" id="reorder-${q.id}" placeholder="Type your sentence here…" autocomplete="off">
+      </div>
+      <button class="btn-check" onclick="checkReorder(${q.id})">Check</button>
+      <div class="feedback" id="fb-${q.id}"></div>`;
+
+  } else if (q.type === "match") {
+    const opts = q.allRights.slice().sort(() => Math.random()-0.5);
+    inner += `<div class="q-text">${q.instruction}</div>
+      <div class="match-wrap">
+        ${q.pairs.map((p,i)=>`
+          <div class="match-row">
+            <div class="match-left">${p.left}</div>
+            <div class="match-arrow">→</div>
+            <select id="match-${q.id}-${i}" class="match-sel">
+              <option value="">— choose —</option>
+              ${opts.map(r=>`<option value="${r}">${r}</option>`).join("")}
+            </select>
+          </div>`).join("")}
+      </div>
+      <button class="btn-check" onclick="checkMatch(${q.id})">Check</button>
+      <div class="feedback" id="fb-${q.id}"></div>`;
+
+  } else if (q.type === "error") {
+    inner += `<div class="q-text">${q.question}</div>
+      <div class="error-sent">❝ ${q.sentence} ❞</div>
+      <div class="fill-blank">
+        <input type="text" id="err-${q.id}" placeholder="Write the corrected sentence…" style="min-width:280px;max-width:100%" autocomplete="off">
+      </div>
+      <button class="btn-check" onclick="checkError(${q.id})">Check</button>
+      <div class="feedback" id="fb-${q.id}"></div>`;
+  }
+
+  card.innerHTML = inner;
+  return card;
+}
+
+// ══════════════════════════════════════════════════
+//  CHECK HANDLERS
+// ══════════════════════════════════════════════════
+function selectMCQ(qid, idx) {
+  if (checked[qid]) return;
+  const sh = shuffledOpts[qid];
+  const correctIdx = sh.correctIdx;
+  const opts = document.querySelectorAll(`#opts-${qid} .mcq-opt`);
+  opts.forEach(o => { o.classList.remove("selected"); o.classList.add("locked"); });
+  opts[idx].classList.add("selected");
+
+  const isCorrect = idx === correctIdx;
+  opts[idx].classList.add(isCorrect ? "correct" : "wrong");
+  if (!isCorrect) opts[correctIdx].classList.add("correct");
+
+  recordAnswer(qid, sh.options[idx], isCorrect);
+  showFeedback(qid, isCorrect, `Correct answer: ${sh.options[correctIdx]}`);
+}
+
+function checkFill(qid) {
+  if (checked[qid]) return;
+  const q = QUESTIONS.find(x=>x.id===qid);
+  const inp = document.getElementById(`fill-${qid}`);
+  const val = inp.value.trim().toLowerCase();
+  const isCorrect = val === q.blank.toLowerCase();
+  inp.classList.add(isCorrect ? "correct" : "wrong");
+  inp.disabled = true;
+  recordAnswer(qid, inp.value.trim(), isCorrect);
+  showFeedback(qid, isCorrect, `Correct answer: ${q.blank}`);
+  document.querySelector(`#card-${qid} .btn-check`).disabled = true;
+}
+
+function selectTF(qid, val) {
+  if (checked[qid]) return;
+  const q = QUESTIONS.find(x=>x.id===qid);
+  const tBtn = document.getElementById(`tf-${qid}-true`);
+  const fBtn = document.getElementById(`tf-${qid}-false`);
+  tBtn.classList.add("locked"); fBtn.classList.add("locked");
+  const chosen = val ? tBtn : fBtn;
+  chosen.classList.add("selected");
+  const isCorrect = val === q.answer;
+  chosen.classList.add(isCorrect ? "correct" : "wrong");
+  if (!isCorrect) {
+    (q.answer ? tBtn : fBtn).classList.add("correct");
+  }
+  recordAnswer(qid, val ? "True" : "False", isCorrect);
+  showFeedback(qid, isCorrect, q.explanation || `Correct answer: ${q.answer ? "True" : "False"}`);
+}
+
+function checkReorder(qid) {
+  if (checked[qid]) return;
+  const q = QUESTIONS.find(x=>x.id===qid);
+  const inp = document.getElementById(`reorder-${qid}`);
+  const val = inp.value.trim();
+  const norm = s => s.toLowerCase().replace(/[^a-z0-9 ]/g,"").replace(/\s+/," ").trim();
+  const isCorrect = norm(val) === norm(q.answer);
+  inp.classList.add(isCorrect ? "correct" : "wrong");
+  inp.disabled = true;
+  recordAnswer(qid, val, isCorrect);
+  showFeedback(qid, isCorrect, `Correct: ${q.answer}`);
+  document.querySelector(`#card-${qid} .btn-check`).disabled = true;
+}
+
+function checkMatch(qid) {
+  if (checked[qid]) return;
+  const q = QUESTIONS.find(x=>x.id===qid);
+  let correct = 0;
+  q.pairs.forEach((p,i) => {
+    const sel = document.getElementById(`match-${qid}-${i}`);
+    const ok = sel.value === p.right;
+    if (ok) correct++;
+    sel.classList.add(ok ? "correct" : "wrong");
+    sel.disabled = true;
+  });
+  const isCorrect = correct === q.pairs.length;
+  recordAnswer(qid, `${correct}/${q.pairs.length} correct`, isCorrect);
+  showFeedback(qid, isCorrect, isCorrect ? "All matched correctly!" : `Only ${correct} of ${q.pairs.length} correct.`);
+  document.querySelector(`#card-${qid} .btn-check`).disabled = true;
+}
+
+function checkError(qid) {
+  if (checked[qid]) return;
+  const q = QUESTIONS.find(x=>x.id===qid);
+  const inp = document.getElementById(`err-${qid}`);
+  const val = inp.value.trim().toLowerCase();
+  const norm = s => s.toLowerCase().replace(/[^a-z0-9 ']/g,"").replace(/\s+/," ").trim();
+  let isCorrect = norm(val) === norm(q.answer);
+  if (!isCorrect && q.acceptAlso) {
+    isCorrect = q.acceptAlso.some(a => val.includes(a.toLowerCase()));
+  }
+  inp.classList.add(isCorrect ? "correct" : "wrong");
+  inp.disabled = true;
+  recordAnswer(qid, inp.value.trim(), isCorrect);
+  showFeedback(qid, isCorrect, `Correct: ${q.answer}`);
+  document.querySelector(`#card-${qid} .btn-check`).disabled = true;
+}
+
+// ══════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════
+function recordAnswer(qid, given, isCorrect) {
+  if (checked[qid]) return;
+  checked[qid] = true;
+  answers[qid] = { given, correct: isCorrect };
+  if (isCorrect) score++;
+  updateProgress();
+}
+
+function showFeedback(qid, ok, msg) {
+  const fb = document.getElementById(`fb-${qid}`);
+  fb.className = `feedback show ${ok ? "ok" : "bad"}`;
+  fb.innerHTML = `<span>${ok ? "✓" : "✗"}</span><span>${msg}</span>`;
+}
+
+function updateProgress() {
+  const total = QUESTIONS.length;
+  const done = Object.keys(checked).length;
+  document.getElementById("prog-label").textContent = `${done} / ${total} answered`;
+  document.getElementById("prog-fill").style.width = `${(done/total)*100}%`;
+  document.getElementById("live-score").textContent = `Score: ${score}`;
+}
+
+// ══════════════════════════════════════════════════
+//  SUBMIT
+// ══════════════════════════════════════════════════
+function submitTest() {
+  const total = QUESTIONS.length;
+  const done = Object.keys(checked).length;
+  if (done < total * 0.5) {
+    if (!confirm(`You have only answered ${done} of ${total} questions. Submit anyway?`)) return;
+  }
+
+  // Build full answer list including unanswered
+  const full = QUESTIONS.map(q => ({
+    qid: q.id, unit: q.unit, topic: q.topic,
+    question: q.question || q.statement || q.sentence || q.prompt,
+    given: answers[q.id] ? answers[q.id].given : "(not answered)",
+    correct: answers[q.id] ? answers[q.id].correct : false,
+    expected: getExpected(q)
+  }));
+
+  const result = {
+    name: studentName,
+    score, total,
+    time: new Date().toLocaleString(),
+    answers: full
+  };
+
+  // Save to localStorage
+  const saved = getSaved();
+  saved.push(result);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+
+  // Show results screen
+  showResults(result);
+}
+
+function getExpected(q) {
+  if (q.type==="mcq") return q.options[q.answer];
+  if (q.type==="fill") return q.blank;
+  if (q.type==="tf") return q.answer ? "True" : "False";
+  if (q.type==="reorder") return q.answer;
+  if (q.type==="error") return q.answer;
+  if (q.type==="match") return q.pairs.map(p=>`${p.left} → ${p.right}`).join(", ");
+  return "—";
+}
+
+function showResults(r) {
+  showScreen("results");
+  const pct = Math.round((r.score / r.total) * 100);
+  document.getElementById("res-score").textContent = r.score;
+  document.getElementById("res-denom").textContent = `/ ${r.total}`;
+
+  let title, sub;
+  if (pct >= 85) { title = "Excellent work! 🎉"; sub = `You scored ${pct}% — outstanding performance, ${r.name}!`; }
+  else if (pct >= 70) { title = "Well done! 👍"; sub = `You scored ${pct}% — good job, ${r.name}!`; }
+  else if (pct >= 50) { title = "Good effort! 📚"; sub = `You scored ${pct}%. Keep practising, ${r.name}!`; }
+  else { title = "Keep going! 💪"; sub = `You scored ${pct}%. Review the units and try again, ${r.name}!`; }
+
+  document.getElementById("res-title").textContent = title;
+  document.getElementById("res-sub").textContent = sub;
+}
+
+// ══════════════════════════════════════════════════
+//  DASHBOARD
+// ══════════════════════════════════════════════════
+function loadDashboard() {
+  const saved = getSaved();
+  const container = document.getElementById("dash-cards");
+  container.innerHTML = "";
+
+  if (!saved.length) {
+    container.innerHTML = `<div class="empty-state">
+      <div class="em-icon">📭</div>
+      <p>No student submissions yet. Share this file with your students!</p>
+    </div>`;
+    return;
+  }
+
+  saved.slice().reverse().forEach(r => {
+    const pct = Math.round((r.score / r.total) * 100);
+    const wrong = r.total - r.score;
+    const card = document.createElement("div");
+    card.className = "student-card";
+
+    const ansRows = r.answers.map(a => `
+      <div class="ans-row">
+        <div class="ans-icon">${a.correct ? "✅" : "❌"}</div>
+        <div class="ans-q">Unit ${a.unit}: ${a.question ? a.question.substring(0,50)+"…" : "—"}</div>
+        <div>
+          <div class="ans-given">${a.given}</div>
+          ${!a.correct ? `<div class="ans-expected">→ ${a.expected}</div>` : ""}
+        </div>
+      </div>`).join("");
+
+    card.innerHTML = `
+      <div class="student-card-name">${r.name}</div>
+      <div class="student-card-time">🕒 ${r.time}</div>
+      <div class="score-ring-wrap">
+        <div class="score-ring">
+          <div class="snum">${pct}%</div>
+          <div class="sdenom">${r.score}/${r.total}</div>
+        </div>
+        <div class="score-breakdown">
+          <div class="sb-row"><span class="sb-label">Correct</span><span class="sb-val correct-color">✓ ${r.score}</span></div>
+          <div class="sb-row"><span class="sb-label">Wrong / Skipped</span><span class="sb-val wrong-color">✗ ${wrong}</span></div>
+          <div class="sb-row"><span class="sb-label">Score</span><span class="sb-val">${pct}%</span></div>
+        </div>
+      </div>
+      <details class="answer-details">
+        <summary>View all answers</summary>
+        ${ansRows}
+      </details>`;
+    container.appendChild(card);
+  });
+}
+
+function getSaved() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
+  catch { return []; }
+}
+
+// ══════════════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0,0);
+}
+
+function goHome() {
+  showScreen("welcome");
+}
+</script>
+</body>
+</html>
